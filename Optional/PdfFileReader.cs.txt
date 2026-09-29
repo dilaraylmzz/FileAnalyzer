@@ -1,0 +1,38 @@
+// OPTIONAL (Requirement 11): .pdf support
+//
+// 1) Install the NuGet package:   dotnet add package PdfPig
+// 2) Copy this file to Readers/PdfFileReader.cs (rename to .cs)
+// 3) In FileReaderFactory.CreateDefault() uncomment:
+//        factory.Register(new PdfFileReader());
+//
+// Nothing else changes - this is what the IFileReader design is for.
+
+using System.Collections.Generic;
+using System.Text;
+using UglyToad.PdfPig;
+
+namespace FileAnalyzer.Readers
+{
+    public class PdfFileReader : IFileReader
+    {
+        public IReadOnlyCollection<string> SupportedExtensions { get; } = new[] { ".pdf" };
+
+        public string Read(string filePath)
+        {
+            try
+            {
+                var builder = new StringBuilder();
+                using (var document = PdfDocument.Open(filePath))
+                {
+                    foreach (var page in document.GetPages())
+                        builder.AppendLine(page.Text);
+                }
+                return builder.ToString();
+            }
+            catch (UglyToad.PdfPig.Core.PdfDocumentFormatException ex)
+            {
+                throw new FileReadException("Dosya bozuk veya geçerli bir .pdf dosyası değil.", ex);
+            }
+        }
+    }
+}
