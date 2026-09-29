@@ -14,4 +14,8 @@
     <Reference Include="System.IO.Compression.FileSystem" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="PdfPig" Version="0.1.16" />
+  </ItemGroup>
+
 </Project>

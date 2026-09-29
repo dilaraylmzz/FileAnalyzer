@@ -18,7 +18,7 @@ namespace FileAnalyzer.Readers
             var factory = new FileReaderFactory();
             factory.Register(new TxtFileReader());
             factory.Register(new DocxFileReader());
-            // factory.Register(new PdfFileReader()); // Optional: see Optional/PdfFileReader.cs.txt
+            factory.Register(new PdfFileReader()); // Optional: see Optional/PdfFileReader.cs.txt
             return factory;
         }
 
